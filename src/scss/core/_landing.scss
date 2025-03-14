@@ -1,1 +1,86 @@
 //Aquí van los estilos en general
+.sectionLanding {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px;
+  gap: 100px;
+  padding: 100px 40px 100px 40px;
+  height: 100vh;
+  background-color: black;
+}
+.sectionSeries {
+  display: flex;
+  justify-content: space-around;
+  gap: 50px;
+  width: 100%;
+
+  &-fav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    border: 2px;
+    border-radius: 2px;
+    width: 50%;
+    border: 5px solid white;
+    border-radius: 10px;
+    padding: 20px 10px 400px 10px;
+    background:url('../images/imganime.jpg');
+  }
+  &-Result {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    border: 2px;
+    border-radius: 2px;
+    width: 50%;
+    border: 5px solid white;
+    border-radius: 10px;
+    padding: 20px 10px 400px 10px;
+    background:url('../images/imganime.jpg');
+  }
+  &-h3 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    color: pink;
+    //background-color: rgba(167, 196, 243, 0.8);
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+  }
+}
+
+.h1 {
+  color: white;
+  font-family: "Zen Dots", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.input{
+    padding: 10px;
+    border-radius: 5px;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+}
+.input:focus{
+    box-shadow: inset 2px 2px 2px pink;
+    outline: none;
+    background-color: rgb(249, 247, 247);
+}
+.btn{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: pink;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+}
+.btn:hover{
+    background-color: rgb(234, 160, 172);
+    padding: 11px;
+}
