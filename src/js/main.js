@@ -20,28 +20,30 @@ Cuando la usuaria haga click
 */
 
 const btnSearch = document.querySelector(".js-btnSearch");
+const btnReset = document.querySelector(".js-btnReset");
 const inputSearch = document.querySelector(".js-input");
 const sectionResult = document.querySelector(".js-sectionResult");
 const sectionFav = document.querySelector(".js-sectionFav");
 let favoritesSeries = []
+let AnimeSeries = [];
 
 function renderInfo(seriesArray) {
+    sectionResult.innerHTML = "";
     for (const serie of seriesArray) {
-        sectionResult.innerHTML += `<div class="container-info">
+        sectionResult.innerHTML += `<div class="container-info " id="${serie.mal_id}">
         <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
         <p>Titulo: ${serie.title}</p>
         </div>`
         //console.log(serie.images.jpg.image_url)
     }
-
 }
 
 
 
 
+const localStorageSeries = JSON.parse(localStorage.getItem("series"));
 
 function takeTitle(title) {
-    const localStorageSeries = JSON.parse(localStorage.getItem("series"));
     console.log("Esto es el localStorage" + localStorageSeries)
     if (localStorageSeries !== null) {
         renderInfo(localStorageSeries);
@@ -50,6 +52,7 @@ function takeTitle(title) {
             .then((response) => response.json())
             .then((response) => {
                 const series = response.data;
+                AnimeSeries.push(series);
                 //console.log(series)
                 localStorage.setItem("series", JSON.stringify(series)); // guarda las series en el navegador
                 renderInfo(series);
@@ -60,7 +63,7 @@ function takeTitle(title) {
 
 function handleClick(ev) {
     ev.preventDefault()
-    //console.log("Ha hecho click")
+    console.log("Ha hecho click")
     const inputValue = inputSearch.value;
     //console.log(inputValue);
     takeTitle(inputValue);
@@ -69,6 +72,20 @@ function handleClick(ev) {
 
 btnSearch.addEventListener("click", handleClick);
 
-//Parte dos
+function handleClickReset(series) {
+    series.preventDefault();
+    localStorage.clear(series)
+    //console.log("Ha hecho reset")
+}
+btnReset.addEventListener("click", handleClickReset);
 
-//Obtener información del localStorage
+
+
+/*const serieInfo = document.querySelector(".js-serieInfo")
+function handleClickSeries(ev) {
+    ev.preventDefault()
+    console.log("ha hecho click en la imagen")
+}
+serieInfo.addEventListener("click", handleClickSeries);*/
+
+
