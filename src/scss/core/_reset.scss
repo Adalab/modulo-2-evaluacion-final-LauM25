@@ -8,3 +8,10 @@ a{
   text-decoration: none;
   color: inherit;
 }
+body{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: black;
+  justify-content: center;
+}
