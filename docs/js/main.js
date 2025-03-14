@@ -1,2 +1,5 @@
-console.log(">> Ready for the second exam :) / :(");
+console.log(">> Ready for the second exam :) / :(");const l=document.querySelector(".js-btnSearch"),i=document.querySelector(".js-btnReset"),a=document.querySelector(".js-input"),c=document.querySelector(".js-sectionResult");document.querySelector(".js-sectionFav");function s(t){c.innerHTML="";for(const e of t)c.innerHTML+=`<div class="container-info " id="${e.mal_id}">
+        <img class="imgResult" src="${e.images.jpg.image_url}" alt:"Imagen serie anime"></img>
+        <p>Titulo: ${e.title}</p>
+        </div>`}const n=JSON.parse(localStorage.getItem("series"));function r(t){console.log("Esto es el localStorage"+n),n!==null?s(n):fetch(`https://api.jikan.moe/v4/anime?q=${t}`).then(e=>e.json()).then(e=>{const o=e.data;localStorage.setItem("series",JSON.stringify(o)),s(o)})}function u(t){t.preventDefault(),console.log("Ha hecho click");const e=a.value;r(e)}l.addEventListener("click",u);function d(t){t.preventDefault(),localStorage.clear(t)}i.addEventListener("click",d);
 //# sourceMappingURL=main.js.map
