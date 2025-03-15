@@ -30,14 +30,24 @@ let AnimeSeries = [];
 function renderInfo(seriesArray) {
     sectionResult.innerHTML = "";
     for (const serie of seriesArray) {
-        sectionResult.innerHTML += `<div class="container-info " id="${serie.mal_id}">
+        let content = "";
+        content += `
+        <div class="container-info js-serie" id="${serie.mal_id}">
         <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
         <p>Titulo: ${serie.title}</p>
-        </div>`
+        <button class="btnFavorite js-btnFav" >AÑADIR A FAVORITOS</button>
+        </div>
+        `
+        sectionResult.innerHTML += content;
         //console.log(serie.images.jpg.image_url)
     }
+
 }
 
+function handleClickSeries() {
+    ev.preventDefault()
+    console.log("ha hecho click en la serie");
+}
 
 
 
@@ -52,14 +62,15 @@ function takeTitle(title) {
             .then((response) => response.json())
             .then((response) => {
                 const series = response.data;
-                AnimeSeries.push(series);
                 //console.log(series)
-                localStorage.setItem("series", JSON.stringify(series)); // guarda las series en el navegador
+                //localStorage.setItem("series", JSON.stringify(favoritesSeries)); // guarda las series en el navegador
                 renderInfo(series);
             })
     }
 
 }
+
+
 
 function handleClick(ev) {
     ev.preventDefault()
@@ -81,11 +92,22 @@ btnReset.addEventListener("click", handleClickReset);
 
 
 
-/*const serieInfo = document.querySelector(".js-serieInfo")
-function handleClickSeries(ev) {
-    ev.preventDefault()
-    console.log("ha hecho click en la imagen")
-}
-serieInfo.addEventListener("click", handleClickSeries);*/
+const seriesHTML = document.querySelectorAll(".js-serie");
+for (const _serie of seriesHTML) {
+    seriesHTML.addEventListener("click", handleClickSeries);
 
+}
+
+//Parte DOS
+// Arriba hago una varibale llamada let favorites
+const updateFavoritesInLocalStorage = () => {
+    localStorage.setItem("favorites", JSON.stringify(favoritesSeries)) // guarda las series en el navegador
+};
+
+const loadFavoritesFromLocalStorage = () => {
+    const storedFavorites = localStorage.getItem("favorites");
+    if (storedFavorites) {
+        favorites = JSON.parse(storedFavorites);
+    }
+}
 
