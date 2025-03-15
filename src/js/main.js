@@ -27,6 +27,51 @@ const sectionFav = document.querySelector(".js-sectionFav");
 let favoritesSeries = []
 let AnimeSeries = [];
 
+/* Con array lleno busco en clickado
+
+
+
+// Añadir paletas como favoritas
+function handleClickfavorita(event) {
+    // Saber la paleta clickada, necesito coger el atributo id
+    const idfavoritaclicked = event.currentTarget.id;
+    console.log(idfavoritaclicked)
+    console.log()
+    // buscar en mi array de paletas, la que tenga el id clickado
+    const favoritaSelected = AnimeSeries.find((AnimeSeries) => {
+        // console.log(palette);
+        return idfavoritaclicked === AnimeSeries.id;
+
+    })
+
+    // añadir la paleta a mi lista de paletas favoritas
+    console.log(favoritaSelected)
+    favoritesSeries.push(favoritaSelected);
+
+    // pintar las paletas favoritas en la ul de favoritas
+    ulFavorites.innerHTML = "";
+    for (const palette of favoritesPalettes) {
+        let content = ""
+        content += `
+            <li>
+                <h3>${palette.name}</h3>
+                <div class="palette js-palette" id="${palette.id}">
+            `
+        for (const color of palette.colors) {
+            content += `<div class="palette_color" style="background-color:#${color}"></div>`
+        }
+        content += `
+                </div>
+            </li>
+        `
+        ulFavorites.innerHTML += content;
+    }
+}
+
+
+*/
+
+
 
 function renderInfo(seriesArray) {
     sectionResult.innerHTML = "";
@@ -55,6 +100,12 @@ function renderInfo(seriesArray) {
         }
 
     }
+    // escucho el click en cualquiera de las paletas
+    const favoritaHTML = document.querySelectorAll(".container-info");
+    for (const fav of favoritaHTML) {
+        fav.addEventListener("click", handleClickfavorita);
+    }
+
 
 }
 
@@ -108,6 +159,10 @@ btnReset.addEventListener("click", handleClickReset);
 
 
 
+
+
+
+/*
 //parte dos
 
 //Hago mi evento con el boton favoritos
@@ -118,6 +173,6 @@ btnFav.forEach(button => {
     })
 
 })
-
+*/
 
 
