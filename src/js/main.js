@@ -27,19 +27,33 @@ const sectionFav = document.querySelector(".js-sectionFav");
 let favoritesSeries = []
 let AnimeSeries = [];
 
+
 function renderInfo(seriesArray) {
     sectionResult.innerHTML = "";
     for (const serie of seriesArray) {
-        let content = "";
-        content += `
-        <div class="container-info js-serie" id="${serie.mal_id}">
+        if (serie.images.jpg.image_url === "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png") {
+            let content = "";
+            content += `
+        <div class="container-info" id="${serie.mal_id}">
+        <img class="imgResult" src="https://icon-library.com/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt:"Imagen serie anime"></img>
+        <p>Titulo: ${serie.title}</p>
+        <button class="btnFavorite js-btnFav" >AÑADIR A FAVORITOS</button>
+        </div>
+        `
+            sectionResult.innerHTML += content;
+        } else {
+            let content = "";
+            content += `
+        <div class="container-info" id="${serie.mal_id}">
         <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
         <p>Titulo: ${serie.title}</p>
         <button class="btnFavorite js-btnFav" >AÑADIR A FAVORITOS</button>
         </div>
         `
-        sectionResult.innerHTML += content;
-        //console.log(serie.images.jpg.image_url)
+            sectionResult.innerHTML += content;
+            //console.log(serie.images.jpg.image_url)
+        }
+
     }
 
 }
@@ -63,8 +77,10 @@ function takeTitle(title) {
             .then((response) => {
                 const series = response.data;
                 //console.log(series)
-                //localStorage.setItem("series", JSON.stringify(favoritesSeries)); // guarda las series en el navegador
+                localStorage.setItem("series", JSON.stringify(series)); // guarda las series en el navegador
                 renderInfo(series);
+
+
             })
     }
 
@@ -92,22 +108,16 @@ btnReset.addEventListener("click", handleClickReset);
 
 
 
-const seriesHTML = document.querySelectorAll(".js-serie");
-for (const _serie of seriesHTML) {
-    seriesHTML.addEventListener("click", handleClickSeries);
+//parte dos
 
-}
+//Hago mi evento con el boton favoritos
+const btnFav = document.querySelectorAll(".js-btnFav")
+btnFav.forEach(button => {
+    button.addEventListener("click", (e) => {
+        console.log("ha hecho click")
+    })
 
-//Parte DOS
-// Arriba hago una varibale llamada let favorites
-const updateFavoritesInLocalStorage = () => {
-    localStorage.setItem("favorites", JSON.stringify(favoritesSeries)) // guarda las series en el navegador
-};
+})
 
-const loadFavoritesFromLocalStorage = () => {
-    const storedFavorites = localStorage.getItem("favorites");
-    if (storedFavorites) {
-        favorites = JSON.parse(storedFavorites);
-    }
-}
+
 
