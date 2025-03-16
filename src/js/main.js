@@ -27,6 +27,25 @@ const sectionFav = document.querySelector(".js-sectionFav");
 let favoritesSeries = []
 let series = [];
 
+const localStorageFavorites = JSON.parse(localStorage.getItem("favoritesSeries"));// obtener la info del localStorage
+if (localStorageFavorites !== null) {
+    favoritesSeries = localStorageFavorites
+    sectionFav.innerHTML = "";
+    for (const serie of localStorageFavorites) {
+        let content = ""
+        content += `
+        <div class="container-info" id="${serie.mal_id}">
+        <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
+        <p>Titulo: ${serie.title}</p>
+        </div>
+        `
+        sectionFav.innerHTML += content;
+    }
+} else {
+
+}
+
+
 
 // Añadir series como favoritas
 function handleClickfavorite(event) {
@@ -41,7 +60,6 @@ function handleClickfavorite(event) {
     favoritesSeries.push(favoriteSelected);
 
     // pintar las series favoritas en la sección de favoritas
-
     sectionFav.innerHTML = "";
     for (const serie of favoritesSeries) {
         let content = ""
@@ -53,6 +71,8 @@ function handleClickfavorite(event) {
         `
         sectionFav.innerHTML += content;
     }
+
+    localStorage.setItem("favoritesSeries", JSON.stringify(favoritesSeries)); // guarda las series en el navegador
 }
 
 
@@ -92,19 +112,16 @@ function renderInfo(seriesArray) {
 }
 
 
-//const localStorageSeries = JSON.parse(localStorage.getItem("series"));
+
+
 
 function takeTitle(title) {
-    /*console.log("Esto es el localStorage" + localStorageSeries)
-    if (localStorageSeries !== null) {
-        renderInfo(localStorageSeries); 
-    } else {*/
     fetch(`https://api.jikan.moe/v4/anime?q=${title}`)
         .then((response) => response.json())
         .then((response) => {
             series = response.data;
 
-            //localStorage.setItem("series", JSON.stringify(series)); // guarda las series en el navegador
+
             renderInfo(series);
 
 
