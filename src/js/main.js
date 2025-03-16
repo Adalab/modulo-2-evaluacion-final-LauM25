@@ -27,23 +27,6 @@ const sectionFav = document.querySelector(".js-sectionFav");
 let favoritesSeries = []
 let series = [];
 
-const localStorageFavorites = JSON.parse(localStorage.getItem("favoritesSeries"));// obtener la info del localStorage
-if (localStorageFavorites !== null) {
-    favoritesSeries = localStorageFavorites
-    sectionFav.innerHTML = "";
-    for (const serie of localStorageFavorites) {
-        let content = ""
-        content += `
-        <div class="container-info" id="${serie.mal_id}">
-        <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
-        <p>Titulo: ${serie.title}</p>
-        </div>
-        `
-        sectionFav.innerHTML += content;
-    }
-} else {
-
-}
 
 
 
@@ -72,7 +55,6 @@ function handleClickfavorite(event) {
         sectionFav.innerHTML += content;
     }
 
-    localStorage.setItem("favoritesSeries", JSON.stringify(favoritesSeries)); // guarda las series en el navegador
 }
 
 
