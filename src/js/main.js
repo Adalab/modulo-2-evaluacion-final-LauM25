@@ -25,56 +25,40 @@ const inputSearch = document.querySelector(".js-input");
 const sectionResult = document.querySelector(".js-sectionResult");
 const sectionFav = document.querySelector(".js-sectionFav");
 let favoritesSeries = []
-let AnimeSeries = [];
-
-/* Con array lleno busco en clickado
+let series = [];
 
 
-
-// Añadir paletas como favoritas
-function handleClickfavorita(event) {
-    // Saber la paleta clickada, necesito coger el atributo id
-    const idfavoritaclicked = event.currentTarget.id;
-    console.log(idfavoritaclicked)
-    console.log()
-    // buscar en mi array de paletas, la que tenga el id clickado
-    const favoritaSelected = AnimeSeries.find((AnimeSeries) => {
-        // console.log(palette);
-        return idfavoritaclicked === AnimeSeries.id;
+// Añadir series como favoritas
+function handleClickfavorite(event) {
+    // Saber la serie clickada, necesito coger el atributo id
+    const idFavoriteClicked = parseInt(event.currentTarget.id);
+    // buscar en mi array de series, la que tenga el id clickado
+    const favoriteSelected = series.find((serie) => {
+        return idFavoriteClicked === serie.mal_id;
 
     })
+    // añadir la serie a mi lista de series favoritas
+    favoritesSeries.push(favoriteSelected);
 
-    // añadir la paleta a mi lista de paletas favoritas
-    console.log(favoritaSelected)
-    favoritesSeries.push(favoritaSelected);
+    // pintar las series favoritas en la sección de favoritas
 
-    // pintar las paletas favoritas en la ul de favoritas
-    ulFavorites.innerHTML = "";
-    for (const palette of favoritesPalettes) {
+    sectionFav.innerHTML = "";
+    for (const serie of favoritesSeries) {
         let content = ""
         content += `
-            <li>
-                <h3>${palette.name}</h3>
-                <div class="palette js-palette" id="${palette.id}">
-            `
-        for (const color of palette.colors) {
-            content += `<div class="palette_color" style="background-color:#${color}"></div>`
-        }
-        content += `
-                </div>
-            </li>
+        <div class="container-info" id="${serie.mal_id}">
+        <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
+        <p>Titulo: ${serie.title}</p>
+        </div>
         `
-        ulFavorites.innerHTML += content;
+        sectionFav.innerHTML += content;
     }
 }
 
 
-*/
-
-
-
 function renderInfo(seriesArray) {
     sectionResult.innerHTML = "";
+    console.log(seriesArray)
     for (const serie of seriesArray) {
         if (serie.images.jpg.image_url === "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png") {
             let content = "";
@@ -82,7 +66,6 @@ function renderInfo(seriesArray) {
         <div class="container-info" id="${serie.mal_id}">
         <img class="imgResult" src="https://icon-library.com/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt:"Imagen serie anime"></img>
         <p>Titulo: ${serie.title}</p>
-        <button class="btnFavorite js-btnFav" >AÑADIR A FAVORITOS</button>
         </div>
         `
             sectionResult.innerHTML += content;
@@ -92,7 +75,6 @@ function renderInfo(seriesArray) {
         <div class="container-info" id="${serie.mal_id}">
         <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
         <p>Titulo: ${serie.title}</p>
-        <button class="btnFavorite js-btnFav" >AÑADIR A FAVORITOS</button>
         </div>
         `
             sectionResult.innerHTML += content;
@@ -100,42 +82,36 @@ function renderInfo(seriesArray) {
         }
 
     }
-    // escucho el click en cualquiera de las paletas
-    const favoritaHTML = document.querySelectorAll(".container-info");
-    for (const fav of favoritaHTML) {
-        fav.addEventListener("click", handleClickfavorita);
+    // escucho el click en cualquiera de las series
+    const favoriteHTML = document.querySelectorAll(".container-info");
+    for (const fav of favoriteHTML) {
+        fav.addEventListener("click", handleClickfavorite);
     }
 
 
 }
 
-function handleClickSeries() {
-    ev.preventDefault()
-    console.log("ha hecho click en la serie");
-}
 
-
-
-const localStorageSeries = JSON.parse(localStorage.getItem("series"));
+//const localStorageSeries = JSON.parse(localStorage.getItem("series"));
 
 function takeTitle(title) {
-    console.log("Esto es el localStorage" + localStorageSeries)
+    /*console.log("Esto es el localStorage" + localStorageSeries)
     if (localStorageSeries !== null) {
-        renderInfo(localStorageSeries);
-    } else {
-        fetch(`https://api.jikan.moe/v4/anime?q=${title}`)
-            .then((response) => response.json())
-            .then((response) => {
-                const series = response.data;
-                //console.log(series)
-                localStorage.setItem("series", JSON.stringify(series)); // guarda las series en el navegador
-                renderInfo(series);
+        renderInfo(localStorageSeries); 
+    } else {*/
+    fetch(`https://api.jikan.moe/v4/anime?q=${title}`)
+        .then((response) => response.json())
+        .then((response) => {
+            series = response.data;
+
+            //localStorage.setItem("series", JSON.stringify(series)); // guarda las series en el navegador
+            renderInfo(series);
 
 
-            })
-    }
-
+        })
 }
+
+
 
 
 
@@ -176,3 +152,4 @@ btnFav.forEach(button => {
 */
 
 
+//<button class="btnFavorite js-btnFav" >AÑADIR A FAVORITOS</button> si quiero añadir a favoritos debajo de p
