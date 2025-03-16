@@ -27,6 +27,25 @@ const sectionFav = document.querySelector(".js-sectionFav");
 let favoritesSeries = []
 let series = [];
 
+const localStorageFavSeries = JSON.parse(localStorage.getItem("favSeries")); // obtener la info del localStorage
+
+if (localStorageFavSeries !== null) { // si el localStorage está lleno, si tiene las series guardadas
+    favoritesSeries = localStorageFavSeries
+    sectionFav.innerHTML = "";
+    for (const serie of localStorageFavSeries) {
+        let content = ""
+        content += `
+        <div class="container-info" id="${serie.mal_id}">
+        <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
+        <p>Titulo: ${serie.title}</p>
+        </div>
+        `
+        sectionFav.innerHTML += content;
+    }
+} else {
+
+}
+
 
 
 
@@ -47,14 +66,14 @@ function handleClickfavorite(event) {
     for (const serie of favoritesSeries) {
         let content = ""
         content += `
-        <div class="container-info" id="${serie.mal_id}">
-        <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
-        <p>Titulo: ${serie.title}</p>
-        </div>
-        `
+            <div class="container-info" id="${serie.mal_id}">
+            <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
+            <p>Titulo: ${serie.title}</p>
+            </div>
+            `
         sectionFav.innerHTML += content;
     }
-
+    localStorage.setItem("favSeries", JSON.stringify(favoritesSeries)); // guardar las series en el navegador
 }
 
 
@@ -93,25 +112,15 @@ function renderInfo(seriesArray) {
 
 }
 
-
-
-
-
+//Aquí llamo a la api con un parametro y me devuelve datos 
 function takeTitle(title) {
     fetch(`https://api.jikan.moe/v4/anime?q=${title}`)
         .then((response) => response.json())
         .then((response) => {
             series = response.data;
-
-
             renderInfo(series);
-
-
         })
 }
-
-
-
 
 
 function handleClick(ev) {
@@ -131,24 +140,3 @@ function handleClickReset(series) {
     //console.log("Ha hecho reset")
 }
 btnReset.addEventListener("click", handleClickReset);
-
-
-
-
-
-
-/*
-//parte dos
-
-//Hago mi evento con el boton favoritos
-const btnFav = document.querySelectorAll(".js-btnFav")
-btnFav.forEach(button => {
-    button.addEventListener("click", (e) => {
-        console.log("ha hecho click")
-    })
-
-})
-*/
-
-
-//<button class="btnFavorite js-btnFav" >AÑADIR A FAVORITOS</button> si quiero añadir a favoritos debajo de p

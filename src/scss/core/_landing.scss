@@ -4,27 +4,35 @@
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 14px;
-  gap: 100px;
-  padding: 100px 40px 100px 40px;
+  gap: 40px;
+  padding: 80px 40px 80px 40px;
+}
+.form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:5px;
 }
 .sectionSeries {
   display: flex;
   justify-content: space-around;
-  gap: 50px;
-  width: 100%;
+  gap: 100px;
 
   &-fav {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     gap: 20px;
     border: 2px;
     border-radius: 2px;
     flex-direction:column ;
     border: 5px solid white;
     border-radius: 10px;
-    padding: 20px 20px 250px 20px;
     background:url('../images/imganime.jpg');
+    min-width: 500px;
+    min-height: 500px;
     &-Img{
       display: flex;
       justify-content: space-between;
@@ -36,14 +44,16 @@
   &-Result {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
     gap: 20px;
     border: 2px;
     border-radius: 2px;
     border: 5px solid white;
     border-radius: 10px;
-    padding: 20px 20px 250px 20px;
     background:url('../images/imganime.jpg');
+    min-width: 500px;
+    min-height: 500px;
     &-Img{
       display: flex;
       justify-content: space-between;
@@ -52,7 +62,8 @@
       align-items: flex-start;
     }
   }
-  &-h3 {
+}
+.sectionSeries-h3{
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-weight: weight;
@@ -60,8 +71,9 @@
     color: pink;
     background-color: white;
     padding: 10px;
-    border-radius: 5px;
-  }
+    //border-radius: 5px;
+    text-align: center;
+    width: 100%;
 }
 
 .h1 {
@@ -69,6 +81,7 @@
   font-family: "Zen Dots", sans-serif;
   font-weight: 400;
   font-style: normal;
+  text-align: center;
 }
 .input{
     padding: 10px;
@@ -90,16 +103,32 @@
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-weight: 600;
+    border: none;
 }
 .btn:hover{
     background-color: rgb(234, 160, 172);
     transform: scale(1.02);
+}
+.btn-reset{
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #b070af;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  border: none;
+}
+.btn-reset:hover{
+  background-color:#935c8c;
+  transform: scale(1.02);
 }
 
 
 .container-info{
   background-color: rgba(0, 0, 0, 0.4);
   padding: 10px;
+  margin: 20px;
   border-radius: 5px;
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
@@ -115,6 +144,7 @@
 }
 .container-info:hover{
   background-color: rgba(0, 0, 0, 0.6);
+  transform: scale(1.02);
 }
 
 .imgResult{
@@ -134,4 +164,70 @@
 .btnFavorite:hover{
   background-color: rgb(234, 160, 172);
   transform: scale(1.02);
+}
+
+/*Media query before tablet*/
+@media (max-width: 900px){
+  .sectionLanding{
+    gap: 40px;
+    }
+  .sectionSeries-fav{
+    min-width: 300px;
+    min-height: 500px;
+  }
+  .sectionSeries-Result{
+    min-height: 500px;
+    min-width: 300px;
+  }
+}
+/* Media query tablet*/
+@media (max-width:768px){
+  .sectionSeries-fav{
+    min-width: 200px;
+    min-height: 400px;
+  }
+  .sectionSeries-Result{
+    min-width: 200px;
+    min-height: 400px;
+  }
+  .sectionLanding{
+    gap: 40px;
+    padding: 14px 14px 14px 15px;
+  }
+  .sectionSeries{
+    gap:20px;
+    
+  }
+  .container-info{
+    width: 180px;
+  }
+  .imgResult{
+    width: 80px;
+  }
+  .container-info{
+    font-size: 12px;
+  }
+}
+
+@media (max-width:480px){
+  .sectionSeries-fav{
+    min-width: 100px;
+    min-height: 400px;
+  }
+  .sectionSeries-Result{
+    min-width: 100px;
+    min-height: 400px;
+  }
+  .container-info{
+    width: 120px;
+  }
+  .imgResult{
+    width: 100px;
+  }
+  .container-info{
+    font-size: 12px;
+    gap:10px;
+    margin: 10px;
+  }
+
 }
