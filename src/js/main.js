@@ -35,15 +35,21 @@ if (localStorageFavSeries !== null) { // si el localStorage está lleno, si tien
     for (const serie of localStorageFavSeries) {
         let content = ""
         content += `
-        <div class="container-info" id="${serie.mal_id}">
-        <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
-        <p>Titulo: ${serie.title}</p>
+        <div class="js-deletedFavLocal container-infoF container-info-fav" id="${serie.mal_id}">
+            <div class="delete js-delete">
+                    <i class="fa-solid fa-x"></i>
+            </div>
+            <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
+            <p>Titulo: ${serie.title}</p>
         </div>
         `
         sectionFav.innerHTML += content;
     }
-} else {
-
+    const deletedFavLocalStorage = document.querySelectorAll(".js-deletedFavLocal");
+    for (const fav of deletedFavLocalStorage) {
+        fav.addEventListener("click", handleClickRemoveFavLocal);
+        console.log("ha hecho click en un fav del LocalStorage")
+    }
 }
 
 
@@ -66,14 +72,22 @@ function handleClickfavorite(event) {
     for (const serie of favoritesSeries) {
         let content = ""
         content += `
-            <div class="container-info" id="${serie.mal_id}">
-            <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
-            <p>Titulo: ${serie.title}</p>
-            </div>
+            <div class="container-infoF container-info-fav" id="${serie.mal_id}"> 
+                <div class="delete js-delete">
+                    <i class="fa-solid fa-x"></i>
+                </div>
+                <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
+                <p>Titulo: ${serie.title}</p>
+             </div>
             `
         sectionFav.innerHTML += content;
     }
     localStorage.setItem("favSeries", JSON.stringify(favoritesSeries)); // guardar las series en el navegador
+
+    const deletedFav = document.querySelectorAll(".container-info-fav");
+    for (const fav of deletedFav) {
+        fav.addEventListener("click", handleClickRemoveFav);
+    }
 }
 
 
@@ -85,8 +99,9 @@ function renderInfo(seriesArray) {
             let content = "";
             content += `
         <div class="container-info" id="${serie.mal_id}">
-        <img class="imgResult" src="https://icon-library.com/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt:"Imagen serie anime"></img>
-        <p>Titulo: ${serie.title}</p>
+            <i class="fa-solid fa-plus plus"></i>
+            <img class="imgResult" src="https://icon-library.com/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt:"Imagen serie anime"></img>
+            <p>Titulo: ${serie.title}</p>
         </div>
         `
             sectionResult.innerHTML += content;
@@ -94,8 +109,9 @@ function renderInfo(seriesArray) {
             let content = "";
             content += `
         <div class="container-info" id="${serie.mal_id}">
-        <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
-        <p>Titulo: ${serie.title}</p>
+            <i class="fa-solid fa-plus plus"></i>
+            <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
+            <p>Titulo: ${serie.title}</p>
         </div>
         `
             sectionResult.innerHTML += content;
@@ -134,9 +150,63 @@ function handleClick(ev) {
 
 btnSearch.addEventListener("click", handleClick);
 
-function handleClickReset(series) {
-    series.preventDefault();
-    localStorage.clear(series)
+function handleClickReset(ev) {
+    ev.preventDefault();
+    localStorage.clear()
     //console.log("Ha hecho reset")
 }
+
 btnReset.addEventListener("click", handleClickReset);
+
+function handleClickRemoveFav(event) {
+    const idFavoriteClicked = parseInt(event.currentTarget.id);
+    // buscar en mi array de series favoritas
+    const removeSelected = favoritesSeries.findIndex((serie) => {
+        return idFavoriteClicked === serie.mal_id;
+    })
+    console.log(removeSelected)
+    favoritesSeries.splice(removeSelected, 1);
+    console.log("ha hecho click")
+    console.log(favoritesSeries)
+
+    // pintar favoritesSeries
+    sectionFav.innerHTML = "";
+    for (const serie of favoritesSeries) {
+        let content = ""
+        content += `
+              <div class="container-info-fav container-infoF" id="${serie.mal_id}"> 
+                  <div class="delete js-delete">
+                      <i class="fa-solid fa-x"></i>
+                  </div>
+                  <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
+                  <p>Titulo: ${serie.title}</p>
+               </div>
+              `
+        sectionFav.innerHTML += content;
+    }
+    localStorage.setItem("favSeries", JSON.stringify(favoritesSeries)); // guardar las series en el navegador
+}
+function handleClickRemoveFavLocal(event) {
+    console.log("ha hecho click en un favorito del LocalStorage que se quiere borrar")
+    const idFavoriteLocalClicked = parseInt(event.currentTarget.id);
+    // buscar en mi array de series favoritas
+    const removeSelected = localStorageFavSeries.findIndex((serie) => {
+        return idFavoriteLocalClicked === serie.mal_id;
+    })
+    console.log(removeSelected)
+    localStorageFavSeries.splice(removeSelected, 1);
+    sectionFav.innerHTML = "";
+    for (const serie of localStorageFavSeries) {
+        let content = ""
+        content += `
+              <div class="container-info-fav container-infoF" id="${serie.mal_id}"> 
+                  <div class="delete js-delete">
+                      <i class="fa-solid fa-x"></i>
+                  </div>
+                  <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
+                  <p>Titulo: ${serie.title}</p>
+               </div>
+              `
+        sectionFav.innerHTML += content;
+    }
+}
