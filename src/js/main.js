@@ -41,6 +41,7 @@ if (localStorageFavSeries !== null) { // si el localStorage está lleno, si tien
             </div>
             <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
             <p>Titulo: ${serie.title}</p>
+            <p>Puntuación : ${serie.score} </p>
         </div>
         `
         sectionFav.innerHTML += content;
@@ -78,6 +79,7 @@ function handleClickfavorite(event) {
                 </div>
                 <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
                 <p>Titulo: ${serie.title}</p>
+                <p>Puntuación : ${serie.score} </p>
              </div>
             `
         sectionFav.innerHTML += content;
@@ -102,6 +104,7 @@ function renderInfo(seriesArray) {
             <i class="fa-solid fa-plus plus"></i>
             <img class="imgResult" src="https://icon-library.com/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt:"Imagen serie anime"></img>
             <p>Titulo: ${serie.title}</p>
+            <p>Puntuación : ${serie.score} </p>
         </div>
         `
             sectionResult.innerHTML += content;
@@ -112,6 +115,7 @@ function renderInfo(seriesArray) {
             <i class="fa-solid fa-plus plus"></i>
             <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
             <p>Titulo: ${serie.title}</p>
+            <p>Puntuación : ${serie.score} </p>
         </div>
         `
             sectionResult.innerHTML += content;
@@ -180,6 +184,7 @@ function handleClickRemoveFav(event) {
                   </div>
                   <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
                   <p>Titulo: ${serie.title}</p>
+                  <p>Puntuación : ${serie.score} </p>
                </div>
               `
         sectionFav.innerHTML += content;
@@ -205,6 +210,7 @@ function handleClickRemoveFavLocal(event) {
                   </div>
                   <img class="imgResult" src="${serie.images.jpg.image_url}" alt:"Imagen serie anime"></img>
                   <p>Titulo: ${serie.title}</p>
+                  <p>Puntuación : ${serie.score} </p>
                </div>
               `
         sectionFav.innerHTML += content;
