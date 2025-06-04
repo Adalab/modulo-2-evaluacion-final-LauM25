@@ -24,15 +24,15 @@ const btnReset = document.querySelector(".js-btnReset");
 const inputSearch = document.querySelector(".js-input");
 const sectionResult = document.querySelector(".js-sectionResult");
 const sectionFav = document.querySelector(".js-sectionFav");
-let favoritesSeries = []
-let series = [];
+let favoritesSeries = []; // Array de series favoritas
+let series = []; // Array de resultados obtenidos de la API
 
 const localStorageFavSeries = JSON.parse(localStorage.getItem("favSeries")); // obtener la info del localStorage
 
 if (localStorageFavSeries !== null) { // si el localStorage está lleno, si tiene las series guardadas
     favoritesSeries = localStorageFavSeries
-    sectionFav.innerHTML = "";
-    for (const serie of localStorageFavSeries) {
+    sectionFav.innerHTML = ""; // Limpiar la sección de favoritos antes de pintar
+    for (const serie of localStorageFavSeries) {  // Recorrer cada serie guardada y pintarla
         let content = ""
         content += `
         <div class="js-deletedFavLocal container-infoF container-info-fav" id="${serie.mal_id}">
@@ -46,6 +46,7 @@ if (localStorageFavSeries !== null) { // si el localStorage está lleno, si tien
         `
         sectionFav.innerHTML += content;
     }
+    // Añadir evento de click a cada favorito para poder eliminarlo
     const deletedFavLocalStorage = document.querySelectorAll(".js-deletedFavLocal");
     for (const fav of deletedFavLocalStorage) {
         fav.addEventListener("click", handleClickRemoveFavLocal);
@@ -56,7 +57,7 @@ if (localStorageFavSeries !== null) { // si el localStorage está lleno, si tien
 
 
 
-// Añadir series como favoritas
+// Función para marcar una serie como favorita
 function handleClickfavorite(event) {
     // Saber la serie clickada, necesito coger el atributo id
     const idFavoriteClicked = parseInt(event.currentTarget.id);
@@ -84,20 +85,21 @@ function handleClickfavorite(event) {
             `
         sectionFav.innerHTML += content;
     }
-    localStorage.setItem("favSeries", JSON.stringify(favoritesSeries)); // guardar las series en el navegador
-
+    localStorage.setItem("favSeries", JSON.stringify(favoritesSeries));  // Guardar favoritos actualizados en localStorage
+    // Añadir eventos para eliminar favoritos
     const deletedFav = document.querySelectorAll(".container-info-fav");
     for (const fav of deletedFav) {
         fav.addEventListener("click", handleClickRemoveFav);
     }
 }
 
-
+// Función para renderizar los resultados de la API
 function renderInfo(seriesArray) {
-    sectionResult.innerHTML = "";
+    sectionResult.innerHTML = ""; // Limpiar resultados anteriores
     console.log(seriesArray)
+    // Recorrer y pintar cada serie
     for (const serie of seriesArray) {
-        if (serie.images.jpg.image_url === "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png") {
+        if (serie.images.jpg.image_url === "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png") {  // Si la imagen no es válida, se usa un placeholder
             let content = "";
             content += `
         <div class="container-info" id="${serie.mal_id}">
@@ -118,12 +120,12 @@ function renderInfo(seriesArray) {
             <p>Puntuación : ${serie.score} </p>
         </div>
         `
-            sectionResult.innerHTML += content;
+            sectionResult.innerHTML += content; // Agregar al DOM
             //console.log(serie.images.jpg.image_url)
         }
 
     }
-    // escucho el click en cualquiera de las series
+    // escucho el click en cualquiera de las series para poder marcar como favorito
     const favoriteHTML = document.querySelectorAll(".container-info");
     for (const fav of favoriteHTML) {
         fav.addEventListener("click", handleClickfavorite);
@@ -132,36 +134,38 @@ function renderInfo(seriesArray) {
 
 }
 
-//Aquí llamo a la api con un parametro y me devuelve datos 
+// Función que hace la llamada a la API con el título dado
 function takeTitle(title) {
     fetch(`https://api.jikan.moe/v4/anime?q=${title}`)
         .then((response) => response.json())
         .then((response) => {
-            series = response.data;
-            renderInfo(series);
+            series = response.data; // Guardar los resultados
+            renderInfo(series); // Mostrar los resultados
         })
 }
 
-
+// Manejador del click en el botón de búsqueda
 function handleClick(ev) {
-    ev.preventDefault()
+    ev.preventDefault() // Evitar recarga del formulario
     console.log("Ha hecho click")
-    const inputValue = inputSearch.value;
+    const inputValue = inputSearch.value; // Obtener texto del input
     //console.log(inputValue);
-    takeTitle(inputValue);
+    takeTitle(inputValue);  // Llamar a la API con ese texto
 
 }
 
-btnSearch.addEventListener("click", handleClick);
+btnSearch.addEventListener("click", handleClick); // Añadir el evento al botón de buscar
 
+// Manejador para el botón de reset
 function handleClickReset(ev) {
     ev.preventDefault();
-    localStorage.clear()
+    localStorage.clear() // Borrar localStorage
     //console.log("Ha hecho reset")
 }
 
-btnReset.addEventListener("click", handleClickReset);
+btnReset.addEventListener("click", handleClickReset); // Añadir evento al botón de reset
 
+// Función para eliminar una serie de favoritos (cuando ya se marcó como favorita)
 function handleClickRemoveFav(event) {
     const idFavoriteClicked = parseInt(event.currentTarget.id);
     // buscar en mi array de series favoritas
@@ -169,11 +173,11 @@ function handleClickRemoveFav(event) {
         return idFavoriteClicked === serie.mal_id;
     })
     console.log(removeSelected)
-    favoritesSeries.splice(removeSelected, 1);
+    favoritesSeries.splice(removeSelected, 1); // Eliminar del array
     console.log("ha hecho click")
     console.log(favoritesSeries)
 
-    // pintar favoritesSeries
+    // Volver a pintar la sección de favoritos
     sectionFav.innerHTML = "";
     for (const serie of favoritesSeries) {
         let content = ""
@@ -189,8 +193,10 @@ function handleClickRemoveFav(event) {
               `
         sectionFav.innerHTML += content;
     }
-    localStorage.setItem("favSeries", JSON.stringify(favoritesSeries)); // guardar las series en el navegador
+    localStorage.setItem("favSeries", JSON.stringify(favoritesSeries)); // Actualizar localStorage con la nueva lista de favoritos
 }
+
+// Función para eliminar favoritos que vienen directamente del localStorage
 function handleClickRemoveFavLocal(event) {
     console.log("ha hecho click en un favorito del LocalStorage que se quiere borrar")
     const idFavoriteLocalClicked = parseInt(event.currentTarget.id);
@@ -199,8 +205,9 @@ function handleClickRemoveFavLocal(event) {
         return idFavoriteLocalClicked === serie.mal_id;
     })
     console.log(removeSelected)
-    localStorageFavSeries.splice(removeSelected, 1);
-    sectionFav.innerHTML = "";
+    localStorageFavSeries.splice(removeSelected, 1);  // Eliminar del array
+    sectionFav.innerHTML = ""; // Limpiar sección
+    // Volver a pintar los favoritos restantes
     for (const serie of localStorageFavSeries) {
         let content = ""
         content += `
